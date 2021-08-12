@@ -1,0 +1,12 @@
+{
+  "name": "zdmin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "css": "sass sass:dist/css"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

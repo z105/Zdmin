@@ -1,0 +1,247 @@
+
+
+@import "base/reset";
+
+//toolbar高度
+$toolbar-height: 40px;
+
+//菜单颜色
+$menu-bgc: #163148;
+$menu-header-bgc: $menu-bgc;
+$menu-body-bgc: lighten($menu-bgc, 10%);
+
+$menu-header-color: #d0d0d0;
+$menu-header-color-hover: lighten($menu-header-color, 10%);
+
+//tabs颜色
+$tab-base-bgc: #d2d2d2;
+$tab-tools-bgc: darken($tab-base-bgc, 10%);
+$tab-bgc: darken($tab-base-bgc, 20%);
+$tab-active-bgc: #125838;
+
+
+// toolbar
+$toolbar-bgc: #006d9a;
+$toolbar-bgc-hover: lighten($toolbar-bgc, 10%);
+$toolbar-color: #d0d0d0;
+
+html, body{
+    height: 100%;
+}
+
+
+.frame{
+    height: 100%;
+    display: flex;
+    background-color: aquamarine;
+
+    .frame-left{
+        display: flex;
+        flex-shrink: 0;
+        min-width: 250px;
+        background-color: burlywood;
+        transition: all 0.2s;
+        flex-direction: column;
+        z-index: 5;
+        width: 0px;
+        overflow: hidden;
+
+        &-hide{
+            min-width: 0px;
+            
+        }
+
+        .logo{
+            background-color: chocolate;
+            height: $toolbar-height;
+            line-height: $toolbar-height;
+            text-align: center;
+            font-weight: bold;
+            
+        }
+
+        .menus{
+            flex-grow: 1;
+            background-color: $menu-bgc;
+
+            .menu-header{
+                display: flex;
+                justify-content: space-between;
+                padding: 14px 20px;
+                font-size: 17px;
+                font-weight: normal;
+                color: $menu-header-color;
+                cursor: pointer;
+                transition: all 0.2s;
+                
+                &:hover{
+                    color: $menu-header-color-hover;
+                }
+
+                .icon{
+                    transition: all 0.2s;
+                }
+
+                .show{
+                    transform: rotate(180deg);
+                    
+                }
+
+            }
+
+
+            .menu-body{
+                
+                display: none;
+                :nth-child(1){
+                    //box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);
+                    //box-shadow: inset -3px 4px 4px 0px #152e53;
+                    box-shadow: inset 1px 5px 6px -4px #1c2d46;
+                }
+                h4{
+                    display: block;
+                    padding: 10px 20px;
+                    background-color: $menu-body-bgc;
+                    color: $menu-header-color;
+                    cursor: pointer;
+                    transition: all 0.2s;
+                    text-decoration: none;
+                    font-size: 16px;
+                    font-weight: normal;
+
+                    &:hover{
+                        color: $menu-header-color-hover;
+                        background-color: lighten($menu-body-bgc, 5%);
+                    }
+                }
+
+
+            }
+
+
+        }
+    }
+
+    .frame-right{
+        flex-grow: 1;
+        flex-direction: column;
+        display: flex;
+        background-color: #f1f1f1;
+
+        .toolbar{
+
+            background-color: $toolbar-bgc;
+            height: $toolbar-height;
+            display: flex;
+            justify-content: space-between;
+
+            &-left{
+                .btn-toolbar{
+                    width: 40px;
+                    line-height: 40px;
+                    transform: rotate(180deg);
+                    text-align: center;
+                    display: block;
+                    color: $toolbar-color;
+                    cursor: pointer;
+                    transition: all 0.2s;
+
+                    &-close{
+                        transform: rotate(0deg);
+                    }
+                    
+                    &:hover{
+                        background-color: $toolbar-bgc-hover;
+                    }
+                }
+                
+            }
+
+            &-right{
+
+            }
+
+        }
+
+        .tabs{
+            height: 30px;
+            background-color: $tab-base-bgc;
+            box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);
+            display: flex;
+            line-height: 30px;
+
+            .tab-tool{
+                background-color: $tab-tools-bgc;
+                text-align: center;
+                cursor: pointer;
+                height: 30px;
+                min-width: 30px;
+                flex-shrink: 0;
+                z-index: 1;
+            }
+
+            .tab-content-wrap{
+                flex: 1;
+                overflow: hidden;
+
+                .tab-content{
+                    width: max-content;
+                    position: fixed;
+
+                    .tab{
+                        cursor: pointer;
+                        height: 30px;
+                        min-width: 120px;
+                        background-color: $tab-bgc;
+                        display: flex;
+                        justify-content: space-between;
+                        padding: 0px 0px 0px 10px;
+                        margin: 0px 1px 0px 0px;
+                        float: left;
+
+                        .icon{
+                            width: 30px;
+                            text-align: center;
+                            color: #941010;
+
+                            &:hover{
+                                font-weight: bold;
+                            }
+                        }
+    
+                        &:hover{
+                            background-color: darken($tab-bgc, 5%);
+                        }
+
+                        &-active{
+                            transition: all 0.2s;
+                            background-color: $tab-active-bgc;
+                            color: #d0d0d0;
+                            &:hover{
+                                background-color: darken($tab-active-bgc, 5%);
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            
+        }
+
+        .page{
+            flex-grow: 1;
+            padding: 5px;
+            
+            iframe{
+                height: 100%;
+                width: 100%;
+                background-color: white;
+            }
+        }
+
+    }
+}
+
+
+

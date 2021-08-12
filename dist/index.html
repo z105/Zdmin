@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zdmin</title>
+    <link rel="stylesheet" href="./css/frame.css">
+    <link rel="stylesheet" href="./css/lib/iconfont/iconfont.css">
+</head>
+<body>
+    <div class="frame">
+        <div class="frame-left">
+            <div class="logo">Zdmin</div>
+            <ul class="menus">
+                <li class="menu">
+                    <a class="menu-header">
+                        <span class="menu-header-name">数据中心</span>
+                        <span class="icon iconfont">&#xeb6d;</span>
+                    </a>
+                    <div class="menu-body">
+                        <h4 data-href="html/dataCenter/home.html">主页</h4>
+                        <h4 data-href="html/dataCenter/pe_pb.html">PE/PB</h4>
+                        <h4 data-href="html/dataCenter/stockGrid.html">Stock</h4>
+                    </div>
+
+                </li>
+                <li class="menu">
+                    <a class="menu-header">
+                        <span class="menu-header-name">工具</span>
+                        <span class="icon iconfont">&#xeb6d;</span>
+                    </a>
+                    <div class="menu-body">
+                        <h4 data-href="html/tools/calcCenter.html">计算中心</h4>
+                    </div>
+                </li>
+                <li class="menu">
+                    <a class="menu-header">
+                        <span class="menu-header-name">管理</span>
+                        <span class="icon iconfont">&#xeb6d;</span>
+                    </a>
+                    <div class="menu-body">
+                        <h4 data-href="html/management/record.html">定投记录</h4>
+                    </div>
+                </li>
+                <li class="menu">
+                    <a class="menu-header">
+                        <span class="menu-header-name">指数</span>
+                        <span class="icon iconfont">&#xeb6d;</span>
+                    </a>
+                    <div class="menu-body">
+                        <h4 data-href="html/index/shangzheng.html">上证指数</h4>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="frame-right">
+            <div class="toolbar">
+                <div class="toolbar-left">
+                    <a class="btn-toolbar" id="menu_openclose">
+                        <span class="icon iconfont">&#xe7ea;</span>
+
+                    </a>
+                </div>
+                <div class="toolbar-right"></div>
+            </div>
+
+            <div class="tabs">
+                <a id="tab-left" class="tab-tool">
+                    <span class="icon iconfont">&#xe7ec;</span>
+                </a>
+                <div class="tab-content-wrap">
+                    <div class="tab-content">
+                        <a class="tab tab-active" data-href="html/dataCenter/home.html">
+                            <span>主页</span>
+                            <span class="icon iconfont">&#xeca0;</span>
+                        </a>
+
+                    </div>
+
+                </div>
+                <a id="tab-right" class="tab-tool">
+                    <span class="icon iconfont">&#xe7eb;</span>
+                </a>
+                
+            </div>
+            <div class="page">
+                <iframe src="html/dataCenter/home.html" data-href="html/dataCenter/home.html" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="./js/frame.js"></script>
+</body>
+</html>

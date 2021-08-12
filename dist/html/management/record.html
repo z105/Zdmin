@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>定投记录</title>
+
+    <link rel="stylesheet" href="../../lib/layui/css/layui.css">
+    <style>
+        html.body{
+            height: 100%;
+        }
+        .content{
+            height: 100%;
+            margin: 0px 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <table id="demo" lay-filter="test"></table>
+
+    </div>
+
+    <div>
+        <div style="display: none;padding: 15px;" id="win_add">
+            <div class="layui-form-item">
+                <label class="layui-form-label">定投日期</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" name="Date" id="Date">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">定投金额</label>
+                <div class="layui-input-block">
+                  <input type="text" name="Account" required  lay-verify="required" placeholder="请输入金额" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">基金代码</label>
+                <div class="layui-input-block">
+                  <input type="text" name="FundCode" required  lay-verify="required" placeholder="请输入基金代码" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                  <textarea name="Description" placeholder="请输入内容" class="layui-textarea"></textarea>
+                </div>
+              </div>
+        </div>
+    
+    </div>
+    
+
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="../../lib/layui/layui.js"></script>
+    <script src="../../js/global.js"></script>
+
+    <script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+        <button class="layui-btn layui-btn-sm" lay-event="update">编辑</button>
+        <button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="delete">删除</button>
+        <button class="layui-btn layui-btn-sm" lay-event="detail">明细</button>
+    </div>
+    </script>
+
+    <script>
+        
+        var table = layui.table;
+        let laydate = layui.laydate;
+        //第一个实例
+        table.render({
+            elem: '#demo'
+            ,height: 'full-20'
+            ,url: `${ baseUrl }/api/InvestmentRecord/GetGrid` //数据接口
+            ,page: true //开启分页
+            ,defaultToolbar: ['filter', 'print', 'exports']
+            ,toolbar: '#toolbarDemo'
+            ,cols: [[ //表头
+            {field: 'id', title: 'ID',  sort: true, fixed: 'left', hide:true}
+            ,{field: 'date', title: '定投日期', width:"15%"}
+            ,{field: 'account', title: '定投金额', width:"10%"}
+            ,{field: 'fundCode', title: '基金代码', width:"10%" } 
+            ,{field: 'description', title: '描述', with: "65%"}
+            ,{field: 'recordtime', title: '记录时间', hide:true}
+            ]]
+        });
+
+
+        table.on('toolbar(test)', function(obj){
+            
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'add':
+                    btn_add();
+                    break;
+                case 'delete':
+                    layer.msg('删除');
+                    break;
+                case 'update':
+                    layer.msg('编辑');
+                    break;
+                case 'detail':
+                    layer.msg("detail");
+                    break;
+            };
+        });
+
+        
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#Date', //指定元素
+            value: new Date()
+        });
+
+        function btn_add(){
+            layer.open({
+                type: 1,
+                title: "新增",
+                area: "500px",
+                content: $("#win_add"),
+                btn:['确定', '取消'],
+                yes:function(index, layero){
+                    console.log("确定");
+                    let obj = $.getWebControls("#win_add");
+                    $.corsPost(`${baseUrl}/api/InvestmentRecord/Add`, obj, function(){
+                        
+                    }, "json");
+                }
+            });
+        }
+    </script>
+
+</body>
+
+
+</html>

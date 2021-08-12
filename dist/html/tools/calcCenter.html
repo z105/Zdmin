@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>calcCenter</h1>
+    <h1></h1>
+    
+    <script>
+        
+        // 按月定投固定金额
+        function clacFixedInvestmentMoth(amount, count, yearyield){
+
+        }
+
+        // 按年定投固定金额
+        function clacFiexInvestmentYear(ammount, count, yearyield){
+            // 1000 * 1 * 0.12 + 1000
+            // 1000 * 1 * 0.12 + 1000 
+            let totalAmmount = 0;
+            for(let i = 0; i < count; i++){
+                 totalAmmount += ((totalAmmount * yearyield) + (ammount * yearyield + ammount));
+            }
+            return totalAmmount;
+        }
+
+        let ammount = clacFiexInvestmentYear(40000, 5, 0.15);
+        console.log(ammount);
+        
+    </script>
+</body>
+</html>
