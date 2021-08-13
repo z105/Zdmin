@@ -18,6 +18,7 @@
     <!--  -->
     <div>
         <div style="display: none;padding: 15px;" id="win_info">
+            <input type="number" hidden name="Id">
             <div class="layui-form-item">
                 <label class="layui-form-label">用户名</label>
                 <div class="layui-input-block">
@@ -72,22 +73,23 @@
             ,defaultToolbar: ['filter', 'print', 'exports']
             ,toolbar: '#toolbarDemo'
             ,cols: [[ //表头
-                {field: 'id', title: 'ID',  sort: true, fixed: 'left', hide:true}
-                ,{field: 'userName', title: '用户名' }
-                ,{field: 'password', title: '密码' }
-                ,{field: 'nickName', title: '昵称' } 
+                {type: 'checkbox' },
+                {field: 'id', title: 'ID',  sort: true, hide:true}
+                ,{field: 'userName', title: '用户名', width:150 }
+                ,{field: 'password', title: '密码', width: 150 }
+                ,{field: 'nickName', title: '昵称', width:150 } 
                 ,{field: 'remark', title: '备注' }
-                ,{fixed: 'right', title:'', align:'center', width:'150', toolbar:'#barBtn'}
+                ,{ title:'', align:'center', width:150, toolbar:'#barBtn'}
             ]]
         });
 
-        // grid 按钮事件
+        // toolbar events
         table.on('toolbar(test)', function(obj){
             
             var checkStatus = table.checkStatus(obj.config.id);
             switch(obj.event){
                 case 'add':
-                    btn_add();
+                    btnAdd();
                     break;
                 case 'delete':
                     
@@ -96,13 +98,14 @@
             };
         });
 
-        // 监听工具条
+        // item toolbar events
         table.on('tool(test)', function(obj){
             var data = obj.data;
             switch(obj.event){
                 case 'edit':
-                    //layer.msg('tool edit');
-                    layer.msg(data);
+                    btnEdit(data);
+                    break;
+                case 'delete':
                     break;
                 
             }
@@ -113,7 +116,7 @@
             table.reload('demo', {}, false);
         }
 
-        function btn_add(){
+        function btnAdd(){
             let $win_add = $("#win_info");
             $.trimInput($win_add);
             layer.open({
@@ -124,6 +127,7 @@
                 btn:['确定', '取消'],
                 yes:function(index, layero){
                     let obj = $.getWebControls($win_add);
+                    
                     $.corsPost(`${baseUrl}/api/kernel/user/add`, obj, function(data){
                         layer.close(layer.index);
                         layer.msg("操作成功",{ time: 1000});
@@ -135,8 +139,30 @@
             
         }
 
-        function btn_edit(){
-
+        // 按钮 编辑
+        function btnEdit(data){
+            let $win = $("#win_info");
+            data = $.setObjFirstUpper(data);
+            $.setWebControls($win, data);
+            layer.open({
+                type: 1,
+                title: "编辑",
+                area: "500px",
+                content: $win,
+                btn:['确定', '取消'],
+                yes:function(index, layero){
+                    let obj = $.getWebControls($win);
+                    obj = JSON.parse(obj);
+                    obj.Id = parseInt(obj.Id);
+                    obj = JSON.stringify(obj);
+                    $.corsPost(`${baseUrl}/api/kernel/user/update`, obj, function(data){
+                        layer.close(index);
+                        layer.msg("操作成功", { time: 1000 });
+                        // 刷新 grid 
+                        reloadGrid();
+                    })
+                }
+            });
         }
 
     </script>

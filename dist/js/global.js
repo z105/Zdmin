@@ -21,8 +21,10 @@ let baseUrl = 'https://localhost:5001';
         /*
             自动获取页面控件值
         */
+
         getWebControls: function ($ele) {
             var reVal = "";
+            let retObj = 
             $ele.find('input,select,textarea').each(function (r) {
                 var id = $(this).attr('name');
     
@@ -31,6 +33,9 @@ let baseUrl = 'https://localhost:5001';
                     value = value.replace(/[\r\n]/g, "\\r\\n").replace(/\"/g, "\\\"").replace(/\t/g, "\\t");
                 }
                 var type = $(this).attr('type');
+                if(type == "number"){
+                    
+                }
                 reVal += '"' + id + '"' + ':' + '"' + $.trim(value) + '",';
     
             });
@@ -45,10 +50,20 @@ let baseUrl = 'https://localhost:5001';
         // 
         setWebControls: function($ele, data){
             for(n in data){
-                $ele.find(`name=['${ n }']`).val(data[n]);
+                $ele.find(`[name='${ n }']`).val(data[n]);
             }
         },
 
+        // 设置对象属性名首字母大写
+        setObjFirstUpper: function(obj){
+            let newObj = new Object();
+            for(n in obj){
+                let name = n.substr(0, 1).toUpperCase() + n.substr(1)
+                newObj[name] = obj[n];
+            }
+            return newObj;
+        },
+        
         trimInput: function($ele){
             $ele.find('input,textarea,select').val('');
         },
