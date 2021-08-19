@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>主页</title>
+    <title>用户管理</title>
     <link rel="stylesheet" href="./../../lib/layui/css/layui.css">
     <style>
         
@@ -58,7 +58,7 @@
     </script>
     <script type="text/html" id="barBtn">
         <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
     </script>
 
     <script>
@@ -92,7 +92,7 @@
                     btnAdd();
                     break;
                 case 'delete':
-                    
+                    btnDeleteSelect();
                     break;
 
             };
@@ -106,6 +106,7 @@
                     btnEdit(data);
                     break;
                 case 'delete':
+                    btnDelete(data);
                     break;
                 
             }
@@ -127,7 +128,6 @@
                 btn:['确定', '取消'],
                 yes:function(index, layero){
                     let obj = $.getWebControls($win_add);
-                    
                     $.corsPost(`${baseUrl}/api/kernel/user/add`, obj, function(data){
                         layer.close(layer.index);
                         layer.msg("操作成功",{ time: 1000});
@@ -152,19 +152,48 @@
                 btn:['确定', '取消'],
                 yes:function(index, layero){
                     let obj = $.getWebControls($win);
-                    obj = JSON.parse(obj);
-                    obj.Id = parseInt(obj.Id);
-                    obj = JSON.stringify(obj);
                     $.corsPost(`${baseUrl}/api/kernel/user/update`, obj, function(data){
                         layer.close(index);
                         layer.msg("操作成功", { time: 1000 });
                         // 刷新 grid 
                         reloadGrid();
-                    })
+                    });
+
                 }
             });
         }
 
+        // 
+        function btnDelete(data){
+            layer.confirm('是否删除?', {icon: 3, title:'提示'}, function(index){
+                $.corsPost(`${baseUrl}/api/kernel/user/delete`, JSON.stringify([data.id]), function(){
+                    layer.msg("操作成功", { time: 1000 });
+                    reloadGrid();
+                });
+                
+                layer.close(index);
+            });
+
+        }
+
+        // 
+        function btnDeleteSelect(){
+            let data = table.checkStatus('demo').data;
+            let ids = new Array();
+            data.forEach(item => {
+                ids.push(item.id);
+            });
+            debugger;
+            layer.confirm('是否删除?', {icon: 3, title:'提示'}, function(index){
+                $.corsPost(`${baseUrl}/api/kernel/user/delete`, JSON.stringify(ids), function(){
+                    layer.msg("操作成功", { time: 1000 });
+                    reloadGrid();
+                });
+                
+                layer.close(index);
+            });
+
+        }
     </script>
 </body>
 </html>

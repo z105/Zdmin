@@ -24,27 +24,34 @@ let baseUrl = 'https://localhost:5001';
 
         getWebControls: function ($ele) {
             var reVal = "";
-            let retObj = 
+            let retObj = new Object();
             $ele.find('input,select,textarea').each(function (r) {
-                var id = $(this).attr('name');
-    
-                var value = $(this).val();
-                if (!IsNullOrEmpty(value)) {
-                    value = value.replace(/[\r\n]/g, "\\r\\n").replace(/\"/g, "\\\"").replace(/\t/g, "\\t");
+                var name = $(this).attr('name');
+                let type = $(this).attr('type');
+                var value = $.trim($(this).val());
+                retObj[name] = value;
+                if(type === "number"){
+                    retObj[name] = parseInt(value)
                 }
-                var type = $(this).attr('type');
-                if(type == "number"){
-                    
-                }
-                reVal += '"' + id + '"' + ':' + '"' + $.trim(value) + '",';
+                // if (!IsNullOrEmpty(value)) {
+                //     value = value.replace(/[\r\n]/g, "\\r\\n").replace(/\"/g, "\\\"").replace(/\t/g, "\\t");
+                // }
+                // var type = $(this).attr('type');
+                // if(type == "number"){
+                //     retObj[ id ] = $.trim(value);
+                // }else{
+
+                // }
+                // reVal += '"' + id + '"' + ':' + '"' + $.trim(value) + '",';
     
             });
+            return JSON.stringify(retObj);
             //
-            reVal = reVal.substr(0, reVal.length - 1);
-            //reVal = reVal.substr(0, reVal.length - 1).replace(/[\r\n]/g, "");
-            //return '{' + base.removeHTMLTag(reVal) + '}';
-            let jsonstr = '{' + removeHTMLTag(reVal) + '}';
-            return jsonstr;
+            // reVal = reVal.substr(0, reVal.length - 1);
+            // //reVal = reVal.substr(0, reVal.length - 1).replace(/[\r\n]/g, "");
+            // //return '{' + base.removeHTMLTag(reVal) + '}';
+            // let jsonstr = '{' + removeHTMLTag(reVal) + '}';
+            // return jsonstr;
         },
 
         // 
@@ -82,8 +89,11 @@ let baseUrl = 'https://localhost:5001';
                 contentType: 'application/json',    // 请求类型
                 dataType: "json",   // 服务器的返回类型，用于格式化回调函数参数
                 type: "post",
-                success: success
-              });
+                success: success,
+                error: function(XMLHttpRequest, textStatus, errorThrown){
+                    layer.msg("请求后台失败：" + textStatus);
+                }
+            });
         }
     
     });
